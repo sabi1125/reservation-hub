@@ -5,4 +5,5 @@ prefec-db.js
 **/API/authStrategies/*
 seed.js
 shopSeeder.js
-test.js
+mock-test.js
+__tests__
