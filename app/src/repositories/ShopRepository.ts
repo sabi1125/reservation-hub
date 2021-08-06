@@ -1,5 +1,5 @@
 import { Prisma } from '@prisma/client'
-import prisma from './prisma'
+import prisma from '../../prisma'
 import { CommonRepositoryInterface } from './CommonRepository'
 import { ShopRepositoryInterface as ShopServiceSocket } from '../services/ShopService'
 import { ShopRepositoryInterface as StylistServiceSocket } from '../services/StylistService'

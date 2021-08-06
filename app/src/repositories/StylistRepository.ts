@@ -1,6 +1,6 @@
 import { Prisma } from '@prisma/client'
 
-import prisma from './prisma'
+import prisma from '../../prisma'
 import { CommonRepositoryInterface } from './CommonRepository'
 import { StylistRepositoryInterface as StylistServiceSocket } from '../services/StylistService'
 import { StylistRepositoryInterface as ShopServiceSocket } from '../services/ShopService'

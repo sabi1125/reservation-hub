@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt'
-import prisma from '../src/repositories/prisma'
+import prisma from '../prisma'
 import areas from './areas-db'
 import prefectures from './prefec-db'
 import cities from './cities-db'

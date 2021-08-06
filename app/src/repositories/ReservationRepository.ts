@@ -1,5 +1,5 @@
 import { Prisma } from '@prisma/client'
-import prisma from './prisma'
+import prisma from '../../prisma'
 import { Reservation } from '../entities/Reservation'
 import { ReservationRepositoryInterface as ReservationServiceSocket } from '../services/ReservationService'
 import { ReservationRepositoryInterface as ShopServiceSocket } from '../services/ShopService'

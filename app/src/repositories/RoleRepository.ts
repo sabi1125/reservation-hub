@@ -3,7 +3,7 @@ import { CommonRepositoryInterface } from './CommonRepository'
 import { RoleRepositoryInterface as UserServiceSocket } from '../services/UserService'
 import { RoleRepositoryInterface as RoleServiceSocket } from '../services/RoleService'
 
-import prisma from './prisma'
+import prisma from '../../prisma'
 
 export const extractValidRoleIds = async (roleIds: number[])
   : Promise<number[]> => {

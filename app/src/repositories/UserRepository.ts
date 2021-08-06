@@ -1,5 +1,5 @@
 import { Prisma } from '@prisma/client'
-import prisma from './prisma'
+import prisma from '../../prisma'
 import { CommonRepositoryInterface } from './CommonRepository'
 import { Female, Gender, User } from '../entities/User'
 import { Role } from '../entities/Role'

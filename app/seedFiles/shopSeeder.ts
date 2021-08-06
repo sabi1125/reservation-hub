@@ -1,4 +1,4 @@
-import prisma from '../src/repositories/prisma'
+import prisma from '../prisma'
 
 (async () => {
   const cityCount = 1747

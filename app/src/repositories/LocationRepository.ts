@@ -1,4 +1,4 @@
-import prisma from './prisma'
+import prisma from '../../prisma'
 import { CommonRepositoryInterface } from './CommonRepository'
 
 import { Area, Prefecture, City } from '../entities/Location'

@@ -12,7 +12,8 @@
     "seed-shop": "node seedFiles/shopSeeder.js",
     "lint": "eslint --ignore-path /app/.eslintignore . --ext .ts",
     "migrate": "prisma migrate dev",
-    "db-reset": "yes | prisma migrate reset && node dist/seedFiles/seed.js"
+    "db-reset": "yes | prisma migrate reset && node dist/seedFiles/seed.js",
+    "test": "ENV_FILE=../reshub-deploy/.env.dev jest dist --detectOpenHandles"
   },
   "browser": {
     "crypto": false
@@ -35,6 +36,7 @@
     "express-async-handler": "^1.1.4",
     "google-auth-library": "^7.3.0",
     "helmet": "^4.6.0",
+    "jest-mock-extended": "^2.0.1",
     "joi": "^17.4.0",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
@@ -53,6 +55,7 @@
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
     "@types/helmet": "^4.0.0",
+    "@types/jest": "^26.0.24",
     "@types/node": "^16.4.5",
     "@types/passport": "^1.0.7",
     "@typescript-eslint/eslint-plugin": "^4.28.5",
@@ -61,8 +64,10 @@
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-import-resolver-typescript": "^2.4.0",
     "eslint-plugin-import": "^2.23.4",
+    "jest": "^27.0.6",
     "nodemon": "^2.0.7",
     "prisma": "^2.28.0",
-    "supertest": "^6.1.4"
+    "supertest": "^6.1.4",
+    "ts-jest": "^27.0.4"
   }
 }
