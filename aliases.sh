@@ -1,5 +1,5 @@
 # init
-alias rh-init="git submodule update --init reshub-deploy"
+alias rh-init="git submodule update --init reshub-deploy app/src/entities"
 
 # lcl
 alias rh-build="docker-compose build server"
@@ -13,7 +13,8 @@ alias db-seed="docker-compose exec server npm run seed"
 alias db-seed-shop="docker-compose exec server npm run seed-shop"
 alias db-reset="docker-compose exec server npm run db-reset"
 alias db-studio="docker-compose exec server node_modules/.bin/prisma studio"
-alias rh-test="docker-compose exec server npm run test"
+
+alias rh-test="docker stop testdb && docker-compose build test && docker-compose up test"
 
 # db back up
 function rh-db-backup() {

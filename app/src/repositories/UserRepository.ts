@@ -94,6 +94,7 @@ export const insertUserWithProfile = async (
   birthday: string,
   gender: string,
 ): Promise<User> => {
+  const birthdayDateObj = new Date(birthday)
   const user = await prisma.user.create({
     data: {
       email,
@@ -111,7 +112,7 @@ export const insertUserWithProfile = async (
           firstNameKanji,
           lastNameKana,
           firstNameKana,
-          birthday,
+          birthday: birthdayDateObj,
           gender: convertEntityGenderToDBGender(gender),
         },
       },
@@ -154,7 +155,7 @@ export const updateUserFromAdmin = async (
       })),
     }
   }
-
+  const birthdayDateObj = new Date(birthday)
   const updateQuery = {
     where: { id },
     data: {
@@ -164,7 +165,7 @@ export const updateUserFromAdmin = async (
           lastNameKanji,
           firstNameKana,
           lastNameKana,
-          birthday,
+          birthday: birthdayDateObj,
           gender: convertEntityGenderToDBGender(gender),
         },
       },

@@ -1,5 +1,6 @@
 version: "3.7"
 volumes:
+  node_modules:
   postgres-data:
 
 services:
@@ -23,6 +24,22 @@ services:
     tty: true
     depends_on:
       - postgresql
+
+  #test
+  test:
+    build:
+      context: .
+      dockerfile: docker/test/Dockerfile
+    container_name: reshub-test
+    environment:
+      - NODE_ENV=development
+      - COMMAND=${COMMAND:-test}
+    env_file:
+      - reshub-deploy/.env.test
+    volumes:
+      - node_modules:/app/node_modules
+    depends_on:
+      - testdb
 
   # prd
   production:
@@ -50,3 +67,11 @@ services:
       - postgres-data:/var/lib/postgresql/data
     env_file:
       - reshub-deploy/.env.dev
+
+  testdb:
+    image: postgres:12
+    container_name: testdb
+    ports:
+      - 5432
+    env_file:
+      - reshub-deploy/.env.test
