@@ -1,6 +1,6 @@
 import { Prisma } from '@prisma/client'
 import { User } from '../../entities/User'
-import prisma from '../../repositories/prisma'
+import prisma from '../../../prisma'
 import { Role } from '../../entities/Role'
 import { UserRepositoryInterface } from '../services/SignUpService'
 
