@@ -64,8 +64,8 @@ const index = asyncHandler(async (req, res) => {
   return res.send({ data, totalCount })
 })
 const showShop = asyncHandler(async (req, res) => {
-  const { id } = res.locals
-  const shop = await ShopService.fetchShop(id)
+  const { shopId } = res.locals
+  const shop = await ShopService.fetchShop(shopId)
   return res.send(shop)
 })
 
@@ -85,16 +85,16 @@ const insertShop = asyncHandler(async (req, res) => {
 
 const updateShop = asyncHandler(async (req, res) => {
   const params = await shopUpsertSchema.validateAsync(req.body, joiOptions)
-  const { id } = res.locals
+  const { shopId } = res.locals
 
-  const shop = await ShopService.updateShop({ id, params })
+  const shop = await ShopService.updateShop({ shopId, params })
 
   return res.send(shop)
 })
 
 const deleteShop = asyncHandler(async (req, res) => {
-  const { id } = res.locals
-  await ShopService.deleteShop(id)
+  const { shopId } = res.locals
+  await ShopService.deleteShop(shopId)
   return res.send({ message: 'Shop deleted' })
 })
 
@@ -128,14 +128,14 @@ const deleteStylist = asyncHandler(async (req, res) => {
 const routes = Router()
 
 routes.get('/', roleCheck(['admin']), index)
-routes.get('/:id', roleCheck(['admin']), parseIntIdMiddleware, showShop)
+routes.get('/:shopId', roleCheck(['admin', 'shop staff']), parseIntIdMiddleware, showShop)
 routes.post('/', roleCheck(['admin']), insertShop)
-routes.post('/search', searchShops)
-routes.patch('/:id', roleCheck(['admin']), parseIntIdMiddleware, updateShop)
-routes.delete('/:id', roleCheck(['admin']), parseIntIdMiddleware, deleteShop)
-routes.post('/:shopId/schedule', roleCheck(['admin']), parseIntIdMiddleware, insertBusinessDaysAndHours)
-routes.post('/:shopId/stylist', roleCheck(['admin']), parseIntIdMiddleware, insertStylist)
-routes.patch('/:shopId/stylist/:id', roleCheck(['admin']), parseIntIdMiddleware, updateStylist)
-routes.delete('/:shopId/stylist/:id', roleCheck(['admin']), parseIntIdMiddleware, deleteStylist)
+routes.post('/search', roleCheck(['admin']), searchShops)
+routes.patch('/:shopId', roleCheck(['admin']), parseIntIdMiddleware, updateShop)
+routes.delete('/:shopId', roleCheck(['admin']), parseIntIdMiddleware, deleteShop)
+routes.post('/:shopId/schedule', roleCheck(['admin', 'shop staff']), parseIntIdMiddleware, insertBusinessDaysAndHours)
+routes.post('/:shopId/stylist', roleCheck(['admin', 'shop staff']), parseIntIdMiddleware, insertStylist)
+routes.patch('/:shopId/stylist/:stylistId', roleCheck(['admin', 'shop staff']), parseIntIdMiddleware, updateStylist)
+routes.delete('/:shopId/stylist/:stylistId', roleCheck(['admin', 'shop staff']), parseIntIdMiddleware, deleteStylist)
 
 export default routes

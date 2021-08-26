@@ -3,21 +3,25 @@ import { OAuth2Client as GoogleAuthClient, TokenPayload } from 'google-auth-libr
 import bcrypt from 'bcrypt'
 
 import config from '../../config'
-import { User } from '../entities/User'
+import { ShopUser, User } from '../entities/User'
 import { AuthServiceInterface as AuthControllerSocket } from '../controllers/authController'
 import { AuthServiceInterface as PassportSocket } from '../middlewares/passport'
 import UserRepository from '../repositories/UserRepository'
 import {
   InvalidParamsError, InvalidTokenError, NotFoundError, UserIsLoggedInError, AuthenticationError,
 } from './Errors/ServiceError'
+import { UnauthorizedError } from '../routes/errors'
 
 export type UserRepositoryInterface = {
-  fetchByEmail(email: string): Promise<User | null>,
+  fetchByEmail(email: string): Promise<User | ShopUser | null>,
   addOAuthId(id: number, provider: string, authId: string): Promise<boolean | null>,
 }
 interface JwtPayload {
   user: User
 }
+
+const isClient = (user: User): boolean => user.roles.findIndex(r => r.slug === 'client') !== -1
+const isShopStaff = (user: User): boolean => user.roles.findIndex(r => r.slug === 'shop_staff') !== -1
 
 const AuthService: AuthControllerSocket & PassportSocket = {
   createToken(user) {
@@ -56,7 +60,15 @@ const AuthService: AuthControllerSocket & PassportSocket = {
     if (!user) {
       throw new NotFoundError()
     }
-
+    if (isClient(user)) {
+      throw new UnauthorizedError()
+    }
+    // if (isShopStaff(user)) {
+    //   const shopUser = {
+    //     ...user,
+    //     shop:
+    //   }
+    // }
     delete user.password
 
     if (!user.oAuthIds || !user.oAuthIds.googleId) {
@@ -78,6 +90,9 @@ const AuthService: AuthControllerSocket & PassportSocket = {
     if (user.password && !bcrypt.compareSync(password, user.password)) {
       throw new InvalidParamsError()
     }
+    if (isClient(user)) {
+      throw new UnauthorizedError()
+    }
 
     delete user.password
 
@@ -86,6 +101,15 @@ const AuthService: AuthControllerSocket & PassportSocket = {
 
   async hack() {
     const user = await UserRepository.fetchByEmail('eugene.sinamban@gmail.com')
+    if (!user) {
+      throw new NotFoundError()
+    }
+    delete user.password
+    return user
+  },
+
+  async staffHack() {
+    const user = await UserRepository.fetchByEmail('staff@staff.com')
     if (!user) {
       throw new NotFoundError()
     }

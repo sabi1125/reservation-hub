@@ -39,6 +39,18 @@ const admins = [
   },
 ]
 
+const staffs = [
+  {
+    firstNameKanji: 'staff',
+    lastNameKanji: 'staff',
+    firstNameKana: 'staff',
+    lastNameKana: 'staff',
+    password: 'testtest',
+    email: 'staff@staff.com',
+
+  },
+]
+
 const roles = [
   {
     name: 'admin',
@@ -115,6 +127,48 @@ const roles = [
     }
   })
   await Promise.all(adminPromises)
+
+  console.log('running staff seeder')
+
+  const staffRole = await prisma.role.findUnique({
+    where: { slug: 'shop_staff' },
+  })
+
+  const staffPromises = staffs.map(async (staff: any) => {
+    try {
+      return prisma.user.upsert({
+        where: { email: staff.email },
+        update: {},
+        create: {
+          email: staff.email,
+          username: staff.username,
+          password: bcrypt.hashSync(staff.password, 10),
+          profile: {
+            create: {
+              firstNameKanji: staff.firstNameKanji,
+              lastNameKanji: staff.lastNameKanji,
+              firstNameKana: staff.firstNameKana,
+              lastNameKana: staff.lastNameKana,
+            },
+          },
+          roles: {
+            create: {
+              role: {
+                connect: {
+                  id: staffRole?.id,
+                },
+              },
+            },
+          },
+        },
+      })
+    } catch (e) {
+      console.error(`Exception : ${e}`)
+      process.exit()
+    }
+  })
+
+  await Promise.all(staffPromises)
 
   console.log('running area seeder')
 

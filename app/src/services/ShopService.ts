@@ -106,18 +106,18 @@ export const ShopService: ShopControllerSocket & MenuControllerSocket & Dashboar
     )
   },
 
-  async updateShop({ id, params }) {
+  async updateShop({ shopId, params }) {
     const isValidLocation = await LocationRepository.isValidLocation(params.areaId, params.prefectureId, params.cityId)
     if (!isValidLocation) {
       throw new InvalidParamsError()
     }
 
-    const shop = await ShopRepository.fetch(id)
+    const shop = await ShopRepository.fetch(shopId)
     if (!shop) {
       throw new NotFoundError()
     }
 
-    return ShopRepository.updateShop(id, params.name, params.areaId, params.prefectureId,
+    return ShopRepository.updateShop(shopId, params.name, params.areaId, params.prefectureId,
       params.cityId, params.address, params.phoneNumber)
   },
 

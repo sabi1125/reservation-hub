@@ -11,6 +11,7 @@ export const roleCheck = (roles: string[]) => (req: any, res: any, next: any): v
   const { user }: { user: User } = req
   if (!user.roles) return next(new UnauthorizedError())
   const authorized: boolean = user.roles.filter(ur => roles.includes(ur.name)).length > 0
+  // const isCorrectShop: boolean = user
   if (!authorized) return next(new UnauthorizedError())
   return next()
 }

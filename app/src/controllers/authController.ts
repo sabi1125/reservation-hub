@@ -1,5 +1,5 @@
 import {
-  Request, Response, NextFunction, CookieOptions, Router,
+  Request, Response, CookieOptions, Router,
 } from 'express'
 import asyncHandler from 'express-async-handler'
 
@@ -15,6 +15,7 @@ export type AuthServiceInterface = {
   verifyIfUserInTokenIsLoggedIn(authToken: any, headerToken?: string): Promise<void>,
   googleAuthenticate(token: string): Promise<User>,
   hack(): Promise<User>
+  staffHack(): Promise<User>
 }
 
 const joiOptions = { abortEarly: false, stripUnknown: true }
@@ -66,9 +67,15 @@ export const logout = (req: Request, res: Response): void => {
 }
 
 // HACK test endpoint to get token and header
-export const hack = asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+export const hack = asyncHandler(async (req, res, next) => {
   const user = await AuthService.hack()
   req.user = user
+  return next()
+})
+
+const staffHack = asyncHandler(async (req, res, next) => {
+  const staff = await AuthService.staffHack()
+  req.user = staff
   return next()
 })
 
@@ -79,5 +86,6 @@ routes.post('/login', verifyIfNotLoggedInYet, passport.authenticate('admin-local
 routes.post('/silent_refresh', passport.authenticate('admin-jwt', { session: false }), login)
 routes.get('/logout', passport.authenticate('admin-jwt', { session: false }), logout)
 routes.get('/hack', hack, login)
+routes.get('/hack_staff', staffHack, login)
 
 export default routes

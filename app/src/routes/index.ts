@@ -26,7 +26,7 @@ router.use('/prefectures', protectAdminRoute, prefectureController)
 router.use('/cities', protectAdminRoute, cityController)
 router.use('/users', protectAdminRoute, userController)
 router.use('/roles', protectAdminRoute, roleController)
-router.use('/shops', protectAdminRoute, shopController, menuController)
+router.use('/shops', protectAdminRoute, menuController, shopController)
 router.use('/reservations', protectAdminRoute, reservationController)
 
 // client api
