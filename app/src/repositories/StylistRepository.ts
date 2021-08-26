@@ -1,5 +1,4 @@
 import { Prisma } from '@prisma/client'
-
 import prisma from './prisma'
 import { CommonRepositoryInterface, DescOrder } from './CommonRepository'
 import { StylistRepositoryInterface as ShopServiceSocket } from '../services/ShopService'

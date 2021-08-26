@@ -9,7 +9,6 @@ import { insertReservationQuery, updateReservationQuery } from '../request-respo
 import { parseIntIdMiddleware, roleCheck } from '../routes/utils'
 import { searchSchema } from './schemas/search'
 import { User } from '../entities/User'
-import { searchRoles } from './roleController'
 
 export type ReservationServiceInterface = {
   fetchReservationsWithTotalCount(query: fetchModelsWithTotalCountQuery)

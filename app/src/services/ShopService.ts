@@ -1,4 +1,3 @@
-import { isRef } from 'joi'
 import { ShopDetail } from '@prisma/client'
 import { ShopRepository } from '../repositories/ShopRepository'
 import { Shop, ShopSchedule } from '../entities/Shop'

@@ -1,4 +1,4 @@
-import { Prisma, ShopDetail } from '@prisma/client'
+import { Prisma } from '@prisma/client'
 import prisma from './prisma'
 import { CommonRepositoryInterface, DescOrder } from './CommonRepository'
 import { ShopRepositoryInterface as ShopServiceSocket } from '../services/ShopService'

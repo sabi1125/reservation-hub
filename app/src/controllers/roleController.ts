@@ -8,7 +8,6 @@ import indexSchema from './schemas/indexSchema'
 import { Role } from '../entities/Role'
 import { parseIntIdMiddleware, roleCheck } from '../routes/utils'
 import { searchSchema } from './schemas/search'
-import { searchShops } from './shopController'
 
 export type RoleServiceInterface = {
   fetchRolesWithTotalCount(query: fetchModelsWithTotalCountQuery): Promise<{ data: Role[], totalCount: number }>,

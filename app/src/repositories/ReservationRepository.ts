@@ -1,11 +1,9 @@
 import { Prisma } from '@prisma/client'
-import { collapseTextChangeRangesAcrossMultipleVersions } from 'typescript'
 import prisma from './prisma'
 import { Reservation } from '../entities/Reservation'
 import { ReservationRepositoryInterface as ReservationServiceSocket } from '../services/ReservationService'
 import { ReservationRepositoryInterface as ShopServiceSocket } from '../services/ShopService'
 import { CommonRepositoryInterface, DescOrder } from './CommonRepository'
-import { searchReservations } from '../controllers/reservationController'
 
 const reservationWithUserAndStylistAndShopWithoutLocation = Prisma.validator<Prisma.ReservationArgs>()(
   {
